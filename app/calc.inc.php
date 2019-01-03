@@ -10,6 +10,13 @@ class Calculation {
     public $policy_price;
     public $commission;
 
+    /**
+     * Calculation constructor.
+     * @param $estimated
+     * @param $num2Inserted
+     * @param $num3Inserted
+     * @param $friday
+     */
     public function __construct($estimated, $num2Inserted, $num3Inserted, $friday) {
 
         $this->num1 = $estimated;
@@ -26,6 +33,9 @@ class Calculation {
         $this->commission = 17;
     }
 
+    /**
+     * @return mixed
+     */
     public function calculate() {
 
         $result['value'] = $this->num1;

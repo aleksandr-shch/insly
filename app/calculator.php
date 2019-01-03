@@ -2,6 +2,11 @@
 
 include_once 'calc.inc.php';
 
+/**
+ * @param $success
+ * @param $message
+ * @return false|string
+ */
 function Response($success, $message)
 {
     header('Content-type: application/json');
