@@ -55,7 +55,7 @@ class Calculation {
             $result[1]['commission'] = $this->getPercents($result[1]['base'], $result['commission_rate']);
             $result[1]['tax'] = $this->getPercents($result[1]['base'], $result['tax_rate']);
             $result[1]['total'] = $this->getPercents($result[1]['base'], $result[1]['commission'], $result[1]['tax']);
-            //overall percents correction
+            //percents correction
             $result[2]['base'] = $this->getPercents($result[0]['base'], $result[1]['base'], $result['installments'], 1);
             $result[2]['commission'] = $this->getPercents($result[0]['commission'], $result[1]['commission'], $result['installments'], 1);
             $result[2]['tax'] = $this->getPercents($result[0]['tax'], $result[1]['tax'], $result['installments'], 1);

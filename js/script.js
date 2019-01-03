@@ -26,13 +26,13 @@ $(document).ready(function () {
                     if(response.success === true){
                         message.css('visibility', 'visible').css('color', 'green').text('Calculated');
                         table.css('visibility','visible');
-                        table.find(".row2").find("td:first-child").text('Base premium ('+response.message.base_premium+'%)');
-                        table.find(".row4").find("td:first-child").text('Tax ('+response.message.tax_rate+'%)');
-                        table.find(".row1").find("td:nth-child(2)").text(response.message.value);
-                        table.find(".row2").find("td:nth-child(2)").text(response.message[0].base);
-                        table.find(".row3").find("td:nth-child(2)").text(response.message[0].commission);
-                        table.find(".row4").find("td:nth-child(2)").text(response.message[0].tax);
-                        table.find(".row5").find("td:nth-child(2)").text(response.message[0].total);
+                        cellsAddText(table, 2, 'first-child', 'Base premium ('+response.message.base_premium+'%)');
+                        cellsAddText(table, 4, 'first-child', 'Tax ('+response.message.tax_rate+'%)');
+                        cellsAddText(table, 1, 'nth-child(2)', response.message.value);
+                        cellsAddText(table, 2, 'nth-child(2)', response.message[0].base);
+                        cellsAddText(table, 3, 'nth-child(2)', response.message[0].commission);
+                        cellsAddText(table, 4, 'nth-child(2)', response.message[0].tax);
+                        cellsAddText(table, 5, 'nth-child(2)', response.message[0].total);
 
                         if(parseInt(response.message.installments) > 1)
                         {
@@ -46,12 +46,13 @@ $(document).ready(function () {
                                 else{
                                     j = 1;
                                 }
-                                table.find("th:nth-child("+(i+1)+")").after('<th>'+i+' Installment</th>');
-                                table.find(".row1").find("td:nth-child("+(i+1)+")").after('<td>&nbsp;</td>');
-                                table.find(".row2").find("td:nth-child("+(i+1)+")").after('<td>'+response.message[j].base+'</td>');
-                                table.find(".row3").find("td:nth-child("+(i+1)+")").after('<td>'+response.message[j].commission+'</td>');
-                                table.find(".row4").find("td:nth-child("+(i+1)+")").after('<td>'+response.message[j].tax+'</td>');
-                                table.find(".row5").find("td:nth-child("+(i+1)+")").after('<td>'+response.message[j].total+'</td>');
+                                let k = i + 1;
+                                table.find("th:nth-child("+k+")").after('<th>'+i+' Installment</th>');
+                                cellsAddText(table, 1, 'nth-child('+k+')', '&nbsp;', 1);
+                                cellsAddText(table, 2, 'nth-child('+k+')', response.message[j].base, 1);
+                                cellsAddText(table, 3, 'nth-child('+k+')', response.message[j].commission, 1);
+                                cellsAddText(table, 4, 'nth-child('+k+')', response.message[j].tax, 1);
+                                cellsAddText(table, 5, 'nth-child('+k+')', response.message[j].total, 1);
                             }
                         }
                     }
@@ -70,4 +71,14 @@ $(document).ready(function () {
         }
         $(this).attr('disabled', false).text('Calculate');
     });
+
+    function cellsAddText(table, row, child, text, after = 0) {
+
+        if(after > 0){
+            table.find(".row"+row).find("td:"+child).after("<td> "+text+"</td>");
+        }
+        else{
+            table.find(".row"+row).find("td:"+child).text(text);
+        }
+    }
 });

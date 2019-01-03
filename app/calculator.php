@@ -61,12 +61,12 @@ function getFriday($time_zone){
 if(($_POST['estimated'] >= 100 && $_POST['estimated'] <= 100000)
     && ($_POST['tax'] >= 0 && $_POST['tax'] <= 100)
     && ($_POST['installment'] >= 1 && $_POST['installment'] <= 12)){
-
+    //POST
     $num1 = $_POST['estimated'];
     $num2 = $_POST['tax'];
     $num3 = $_POST['installment'];
     $time_zone = $_POST['time_zone'];
-
+    //Calculate
     $calculator = new Calculation($num1, $num2, $num3, getFriday($time_zone));
 
     if(is_array($calculator->calculate())){
