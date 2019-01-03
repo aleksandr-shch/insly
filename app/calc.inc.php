@@ -43,22 +43,47 @@ class Calculation {
         $result['commission_rate'] = $this->commission;
         $result['tax_rate'] = $this->num2;
         $result['installments'] = $this->num3;
-        $result[0]['base'] = number_format((float)(($result['value']/100)*$result['base_premium']), 2, '.', '');
-        $result[0]['commission'] = number_format((float)(($result[0]['base']/100)*$result['commission_rate']), 2, '.', '');
-        $result[0]['tax'] = number_format((float)(($result[0]['base']/100)*$result['tax_rate']), 2, '.', '');
-        $result[0]['total'] = number_format((float)($result[0]['base']+$result[0]['commission']+$result[0]['tax']), 2, '.', '');
+        //total percents
+        $result[0]['base'] = $this->getPercents($result['value'], $result['base_premium']);
+        $result[0]['commission'] = $this->getPercents($result[0]['base'], $result['commission_rate']);
+        $result[0]['tax'] = $this->getPercents($result[0]['base'], $result['tax_rate']);
+        $result[0]['total'] = $this->getPercents($result[0]['base'], $result[0]['commission'], $result[0]['tax']);
 
         if($result['installments'] > 1){
-            $result[1]['base'] = number_format((float)((($result['value']/100)*$result['base_premium'])/$result['installments']), 2, '.', '');
-            $result[1]['commission'] = number_format((float)(($result[1]['base']/100)*$result['commission_rate']), 2, '.', '');
-            $result[1]['tax'] = number_format((float)(($result[1]['base']/100)*$result['tax_rate']), 2, '.', '');
-            $result[1]['total'] = number_format((float)($result[1]['base']+$result[1]['commission']+$result[1]['tax']), 2, '.', '');
-
-            $result[2]['base'] = number_format((float)(($result[0]['base']-$result[1]['base']*$result['installments'])+$result[1]['base']), 2, '.', '');
-            $result[2]['commission'] = number_format((float)(($result[0]['commission']-$result[1]['commission']*$result['installments'])+$result[1]['commission']), 2, '.', '');
-            $result[2]['tax'] = number_format((float)(($result[0]['tax']-$result[1]['tax']*$result['installments'])+$result[1]['tax']), 2, '.', '');
-            $result[2]['total'] = number_format((float)(($result[0]['total']-$result[1]['total']*$result['installments'])+$result[1]['total']), 2, '.', '');
+            //installment percents
+            $result[1]['base'] = $this->getPercents($result['value'], $result['base_premium'], $result['installments'],0,1);
+            $result[1]['commission'] = $this->getPercents($result[1]['base'], $result['commission_rate']);
+            $result[1]['tax'] = $this->getPercents($result[1]['base'], $result['tax_rate']);
+            $result[1]['total'] = $this->getPercents($result[1]['base'], $result[1]['commission'], $result[1]['tax']);
+            //overall percents correction
+            $result[2]['base'] = $this->getPercents($result[0]['base'], $result[1]['base'], $result['installments'], 1);
+            $result[2]['commission'] = $this->getPercents($result[0]['commission'], $result[1]['commission'], $result['installments'], 1);
+            $result[2]['tax'] = $this->getPercents($result[0]['tax'], $result[1]['tax'], $result['installments'], 1);
+            $result[2]['total'] = $this->getPercents($result[0]['total'], $result[1]['total'], $result['installments'], 1);
         }
         return $result;
+    }
+
+    /**
+     * @param $number1
+     * @param $number2
+     * @param int $number3
+     * @param int $correction
+     * @param int $overall
+     * @return string
+     */
+    private function getPercents($number1, $number2, $number3 = 0, $correction = 0, $overall = 0){
+
+        if($number3 > 0){
+
+            if($correction > 0){
+                return number_format((float)(($number1-$number2*$number3)+$number2), 2, '.', '');
+            }
+            elseif($overall > 0){
+                return number_format((float)((($number1/100)*$number2)/$number3), 2, '.', '');
+            }
+            return number_format((float)($number1+$number2+$number3), 2, '.', '');
+        }
+        return number_format((float)(($number1/100)*$number2), 2, '.', '');
     }
 }
