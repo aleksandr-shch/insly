@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Calculator</title>
+        <link rel="stylesheet" href="css/style.css">
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="js/script.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                let d = new Date();
+                let n = -d.getTimezoneOffset();
+                $("#calculator input[name='time_zone']").val(n);
+            });
+        </script>
+    </head>
+    <body>
+        <form id="calculator" action="app/calculator.php" method="post">
+            <p>CAR INSURANCE CALCULATOR</p>
+            <p id="message">&nbsp;</p>
+            <input type="hidden" name="time_zone" value="">
+            <label for="input_calc1">Estimated &euro;:</label>
+            <input id="input_calc1" type="number" min="100" max="100000" name="estimated" placeholder="Estimated value of the car (100-100000)" value="">
+            <label for="input_calc2">Tax &percnt;:</label>
+            <input id="input_calc2" type="number" min="0" max="100" name="tax" placeholder="Tax percentage (0-100)" value="">
+            <label for="input_calc3">Instalment months:</label>
+            <input id="input_calc3" type="number" min="1" max="12" name="installment" placeholder="Number of installments (1-12)" value="">
+            <button onclick="return false;">Calculate</button>
+        </form>
+
+        <table class="table" border="0" cellspacing="0" cellpadding="0">
+            <thead>
+                <tr>
+                    <th>&nbsp;</th><th>Policy</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="row1">
+                    <td class="header">Value</td><td>&nbsp;</td>
+                </tr>
+                <tr class="row2">
+                    <td class="header">&nbsp;</td><td>&nbsp;</td>
+                </tr>
+                <tr class="row3">
+                    <td class="header">Commission (17%)</td><td>&nbsp;</td>
+                </tr>
+                <tr class="row4">
+                    <td class="header">&nbsp;</td><td>&nbsp;</td>
+                </tr>
+                <tr class="row5">
+                    <td class="header"><strong>Total cost</strong></td><td>&nbsp;</td>
+                </tr>
+            </tbody>
+        </table>
+    </body>
+</html>
