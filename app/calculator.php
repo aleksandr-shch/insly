@@ -14,14 +14,26 @@ function response($message, $success = true)
     return json_encode(array('success' => $success, 'message' => $message));
 }
 
+/**
+ * @param $message
+ * @return false|string
+ */
 function successResponse($message){
     return response($message, true);
 }
 
+/**
+ * @param $message
+ * @return false|string
+ */
 function errorResponse($message){
     return response($message, false);
 }
 
+/**
+ * @param $time_zone
+ * @return string
+ */
 function getFriday($time_zone){
     $friday = '';
 
