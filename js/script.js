@@ -9,6 +9,8 @@ $(document).ready(function () {
         let message = $("#message");
         let form = $("#calculator");
         let table = $(".table");
+        table.find('tr > th').slice(2).remove();
+        table.find('tr').each(function(index,value){$(this).find('td').slice(2).remove()});
         message.css('visibility', 'hidden').text('');
 
         if((parseInt(estimated) >= 100 && parseInt(estimated) <= 100000)
