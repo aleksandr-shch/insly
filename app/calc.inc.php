@@ -7,21 +7,21 @@ class Calculation {
     public $num2;
     public $num3;
     public $base;
-    protected $base_total;
-    protected $base_divided;
-    protected $base_corrected;
+    public $base_total;
+    public $base_divided;
+    public $base_corrected;
     public $commission;
-    protected $commission_total;
-    protected $commission_divided;
-    protected $commission_corrected;
-    protected $tax_total;
-    protected $tax_divided;
-    protected $tax_corrected;
-    protected $total_cost;
-    protected $total_cost_divided;
-    protected $total_cost_corrected;
-    protected $type;
-    protected $percents;
+    public $commission_total;
+    public $commission_divided;
+    public $commission_corrected;
+    public $tax_total;
+    public $tax_divided;
+    public $tax_corrected;
+    public $total_cost;
+    public $total_cost_divided;
+    public $total_cost_corrected;
+    public $type;
+    public $percents;
 
 
     /**
