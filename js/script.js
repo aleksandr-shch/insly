@@ -24,17 +24,17 @@ $(document).ready(function () {
                 data: form.serialize(),
                 dataType: 'json',
                 success: function(response) {
-console.log(response.message);
+
                     if(response.success === true){
                         message.css('visibility', 'visible').css('color', 'green').text('Calculated');
                         table.css('visibility','visible');
                         cellsAddText(table, 2, 'first-child', 'Base premium ('+response.message.base+'%)');
                         cellsAddText(table, 4, 'first-child', 'Tax ('+response.message.num2+'%)');
                         cellsAddText(table, 1, 'nth-child(2)', response.message.num1);
-                        cellsAddText(table, 2, 'nth-child(2)', response.message.base_total);
-                        cellsAddText(table, 3, 'nth-child(2)', response.message.commission_total);
-                        cellsAddText(table, 4, 'nth-child(2)', response.message.tax_total);
-                        cellsAddText(table, 5, 'nth-child(2)', response.message.total_cost);
+                        cellsAddText(table, 2, 'nth-child(2)', response.message.baseTotal);
+                        cellsAddText(table, 3, 'nth-child(2)', response.message.commissionTotal);
+                        cellsAddText(table, 4, 'nth-child(2)', response.message.taxTotal);
+                        cellsAddText(table, 5, 'nth-child(2)', response.message.totalCost);
 
                         if(parseInt(response.message.num3) > 1)
                         {
@@ -48,16 +48,16 @@ console.log(response.message);
                                 let total_cost = '';
 
                                 if(i == 1){
-                                    base = response.message.base_corrected;
-                                    commission = response.message.commission_corrected;
-                                    tax = response.message.tax_corrected;
-                                    total_cost = response.message.total_cost_corrected;
+                                    base = response.message.baseCorrected;
+                                    commission = response.message.commissionCorrected;
+                                    tax = response.message.taxCorrected;
+                                    total_cost = response.message.totalCostCorrected;
                                 }
                                 else{
-                                    base = response.message.base_divided;
-                                    commission = response.message.commission_divided;
-                                    tax = response.message.tax_divided;
-                                    total_cost = response.message.total_cost_divided;
+                                    base = response.message.baseDivided;
+                                    commission = response.message.commissionDivided;
+                                    tax = response.message.taxDivided;
+                                    total_cost = response.message.totalCostDivided;
                                 }
 
                                 let k = i + 1;
