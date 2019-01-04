@@ -24,37 +24,49 @@ $(document).ready(function () {
                 data: form.serialize(),
                 dataType: 'json',
                 success: function(response) {
-
+console.log(response.message);
                     if(response.success === true){
                         message.css('visibility', 'visible').css('color', 'green').text('Calculated');
                         table.css('visibility','visible');
-                        cellsAddText(table, 2, 'first-child', 'Base premium ('+response.message.base_premium+'%)');
-                        cellsAddText(table, 4, 'first-child', 'Tax ('+response.message.tax_rate+'%)');
-                        cellsAddText(table, 1, 'nth-child(2)', response.message.value);
-                        cellsAddText(table, 2, 'nth-child(2)', response.message[0].base);
-                        cellsAddText(table, 3, 'nth-child(2)', response.message[0].commission);
-                        cellsAddText(table, 4, 'nth-child(2)', response.message[0].tax);
-                        cellsAddText(table, 5, 'nth-child(2)', response.message[0].total);
+                        cellsAddText(table, 2, 'first-child', 'Base premium ('+response.message.base+'%)');
+                        cellsAddText(table, 4, 'first-child', 'Tax ('+response.message.num2+'%)');
+                        cellsAddText(table, 1, 'nth-child(2)', response.message.num1);
+                        cellsAddText(table, 2, 'nth-child(2)', response.message.base_total);
+                        cellsAddText(table, 3, 'nth-child(2)', response.message.commission_total);
+                        cellsAddText(table, 4, 'nth-child(2)', response.message.tax_total);
+                        cellsAddText(table, 5, 'nth-child(2)', response.message.total_cost);
 
-                        if(parseInt(response.message.installments) > 1)
+                        if(parseInt(response.message.num3) > 1)
                         {
                             let j = 1;
 
-                            for(let i = 1; i <= response.message.installments; i++){
+                            for(let i = 1; i <= response.message.num3; i++){
+
+                                let base = '';
+                                let commission = '';
+                                let tax = '';
+                                let total_cost = '';
 
                                 if(i == 1){
-                                    j = 2;
+                                    base = response.message.base_corrected;
+                                    commission = response.message.commission_corrected;
+                                    tax = response.message.tax_corrected;
+                                    total_cost = response.message.total_cost_corrected;
                                 }
                                 else{
-                                    j = 1;
+                                    base = response.message.base_divided;
+                                    commission = response.message.commission_divided;
+                                    tax = response.message.tax_divided;
+                                    total_cost = response.message.total_cost_divided;
                                 }
+
                                 let k = i + 1;
                                 table.find("th:nth-child("+k+")").after('<th>'+i+' Installment</th>');
                                 cellsAddText(table, 1, 'nth-child('+k+')', '&nbsp;', 1);
-                                cellsAddText(table, 2, 'nth-child('+k+')', response.message[j].base, 1);
-                                cellsAddText(table, 3, 'nth-child('+k+')', response.message[j].commission, 1);
-                                cellsAddText(table, 4, 'nth-child('+k+')', response.message[j].tax, 1);
-                                cellsAddText(table, 5, 'nth-child('+k+')', response.message[j].total, 1);
+                                cellsAddText(table, 2, 'nth-child('+k+')', base, 1);
+                                cellsAddText(table, 3, 'nth-child('+k+')', commission, 1);
+                                cellsAddText(table, 4, 'nth-child('+k+')', tax, 1);
+                                cellsAddText(table, 5, 'nth-child('+k+')', total_cost, 1);
                             }
                         }
                     }

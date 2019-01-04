@@ -35,7 +35,7 @@ function errorResponse($message){
  * @return string
  */
 function getFriday($time_zone){
-    $friday = '';
+    $friday = 11;
 
     if(date('L') == 'friday'){
 
@@ -52,7 +52,7 @@ function getFriday($time_zone){
         $time = time() + $shift*60;
         $date = date("H", $time);
 
-        if($date > 14 && $date < 21) $friday = 'friday';
+        if($date > 14 && $date < 21) $friday = 13;
     }
 
     return $friday;
@@ -69,7 +69,7 @@ if(($_POST['estimated'] >= 100 && $_POST['estimated'] <= 100000)
     //Calculate
     $calculator = new Calculation($num1, $num2, $num3, getFriday($time_zone));
 
-    if(is_array($calculator->calculate())){
+    if($calculator->calculate()){
         echo successResponse($calculator->calculate());
     }
     else{

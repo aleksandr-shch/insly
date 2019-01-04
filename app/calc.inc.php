@@ -7,31 +7,36 @@ class Calculation {
     public $num2;
     public $num3;
     public $base;
-    public $policy_price;
+    public $base_total;
+    public $base_divided;
+    public $base_corrected;
     public $commission;
+    public $commission_total;
+    public $commission_divided;
+    public $commission_corrected;
+    public $tax_total;
+    public $tax_divided;
+    public $tax_corrected;
+    public $total_cost;
+    public $total_cost_divided;
+    public $total_cost_corrected;
     public $type;
     public $percents;
+
 
     /**
      * Calculation constructor.
      * @param $estimated
-     * @param $num2Inserted
-     * @param $num3Inserted
+     * @param $tax
+     * @param $installment
      * @param $friday
      */
-    public function __construct($estimated, $num2Inserted, $num3Inserted, $friday) {
+    public function __construct($estimated, $tax, $installment, $friday) {
 
         $this->num1 = $estimated;
-        $this->num2 = $num2Inserted;
-        $this->num3 = $num3Inserted;
+        $this->num2 = $tax;
+        $this->num3 = $installment;
         $this->base = $friday;
-
-        if($this->base == 'friday'){
-            $this->policy_price = 13;
-        }
-        else{
-            $this->policy_price = 11;
-        }
         $this->commission = 17;
     }
 
@@ -44,47 +49,44 @@ class Calculation {
         return $this->type;
     }
 
+
     /**
-     * @return mixed
+     * @return $this
      */
     public function calculate() {
 
-        $result['value'] = $this->num1;
-        $result['base_premium'] = $this->policy_price;
-        $result['commission_rate'] = $this->commission;
-        $result['tax_rate'] = $this->num2;
-        $result['installments'] = $this->num3;
         //total percents
-        $result[0]['base'] = $this->getPercents($this->getType('part'), $result['value'], $result['base_premium']);
-        $result[0]['commission'] = $this->getPercents($this->getType('part'), $result[0]['base'], $result['commission_rate']);
-        $result[0]['tax'] = $this->getPercents($this->getType('part'), $result[0]['base'], $result['tax_rate']);
-        $result[0]['total'] = $this->getPercents($this->getType('total'), $result[0]['base'], $result[0]['commission'], $result[0]['tax']);
+        $this->base_total = $this->getPercents($this->getType('part'), $this->num1, $this->base);
+        $this->commission_total = $this->getPercents($this->getType('part'), $this->base_total, $this->commission);
+        $this->tax_total = $this->getPercents($this->getType('part'), $this->base_total, $this->num2);
+        $this->total_cost = $this->getPercents($this->getType('total'), $this->base_total, $this->commission_total, $this->tax_total);
 
-        if($result['installments'] > 1){
-            $result = $this->getInstallments($result);
+        if($this->num3 > 1){
+            $this->getInstallments();
         }
-        return $result;
+        return $this;
     }
+
 
     /**
-     * @param $result
-     * @return mixed
+     * @return Calculation
      */
-    private function getInstallments($result){
+    private function getInstallments(){
 
         //installment percents
-        $result[1]['base'] = $this->getPercents($this->getType('overall'), $result['value'], $result['base_premium'], $result['installments']);
-        $result[1]['commission'] = $this->getPercents($this->getType('part'), $result[1]['base'], $result['commission_rate']);
-        $result[1]['tax'] = $this->getPercents($this->getType('part'), $result[1]['base'], $result['tax_rate']);
-        $result[1]['total'] = $this->getPercents($this->getType('total'), $result[1]['base'], $result[1]['commission'], $result[1]['tax']);
+        $this->base_divided = $this->getPercents($this->getType('overall'), $this->num1, $this->base, $this->num3);
+        $this->commission_divided = $this->getPercents($this->getType('part'), $this->base_divided, $this->commission);
+        $this->tax_divided = $this->getPercents($this->getType('part'), $this->base_divided, $this->num2);
+        $this->total_cost_divided = $this->getPercents($this->getType('total'), $this->base_divided, $this->commission_divided, $this->tax_divided);
         //percents correction
-        $result[2]['base'] = $this->getPercents($this->getType('correction'), $result[0]['base'], $result[1]['base'], $result['installments']);
-        $result[2]['commission'] = $this->getPercents($this->getType('correction'), $result[0]['commission'], $result[1]['commission'], $result['installments']);
-        $result[2]['tax'] = $this->getPercents($this->getType('correction'), $result[0]['tax'], $result[1]['tax'], $result['installments']);
-        $result[2]['total'] = $this->getPercents($this->getType('correction'), $result[0]['total'], $result[1]['total'], $result['installments']);
+        $this->base_corrected = $this->getPercents($this->getType('correction'), $this->base_total, $this->base_divided, $this->num3);
+        $this->commission_corrected = $this->getPercents($this->getType('correction'), $this->commission_total, $this->commission_divided, $this->num3);
+        $this->tax_corrected = $this->getPercents($this->getType('correction'), $this->tax_total, $this->tax_divided, $this->num3);
+        $this->total_cost_corrected = $this->getPercents($this->getType('correction'), $this->total_cost, $this->total_cost_divided, $this->num3);
 
-        return $result;
+        return $this;
     }
+
 
     /**
      * @param $type
