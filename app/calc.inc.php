@@ -50,17 +50,24 @@ class Calculation {
         $result[0]['total'] = $this->getPercents($result[0]['base'], $result[0]['commission'], $result[0]['tax']);
 
         if($result['installments'] > 1){
-            //installment percents
-            $result[1]['base'] = $this->getPercents($result['value'], $result['base_premium'], $result['installments'],0,1);
-            $result[1]['commission'] = $this->getPercents($result[1]['base'], $result['commission_rate']);
-            $result[1]['tax'] = $this->getPercents($result[1]['base'], $result['tax_rate']);
-            $result[1]['total'] = $this->getPercents($result[1]['base'], $result[1]['commission'], $result[1]['tax']);
-            //percents correction
-            $result[2]['base'] = $this->getPercents($result[0]['base'], $result[1]['base'], $result['installments'], 1);
-            $result[2]['commission'] = $this->getPercents($result[0]['commission'], $result[1]['commission'], $result['installments'], 1);
-            $result[2]['tax'] = $this->getPercents($result[0]['tax'], $result[1]['tax'], $result['installments'], 1);
-            $result[2]['total'] = $this->getPercents($result[0]['total'], $result[1]['total'], $result['installments'], 1);
+            $result = $this->getInstallments($result);
         }
+        return $result;
+    }
+
+    private function getInstallments($result){
+
+        //installment percents
+        $result[1]['base'] = $this->getPercents($result['value'], $result['base_premium'], $result['installments'],0,1);
+        $result[1]['commission'] = $this->getPercents($result[1]['base'], $result['commission_rate']);
+        $result[1]['tax'] = $this->getPercents($result[1]['base'], $result['tax_rate']);
+        $result[1]['total'] = $this->getPercents($result[1]['base'], $result[1]['commission'], $result[1]['tax']);
+        //percents correction
+        $result[2]['base'] = $this->getPercents($result[0]['base'], $result[1]['base'], $result['installments'], 1);
+        $result[2]['commission'] = $this->getPercents($result[0]['commission'], $result[1]['commission'], $result['installments'], 1);
+        $result[2]['tax'] = $this->getPercents($result[0]['tax'], $result[1]['tax'], $result['installments'], 1);
+        $result[2]['total'] = $this->getPercents($result[0]['total'], $result[1]['total'], $result['installments'], 1);
+
         return $result;
     }
 
