@@ -1,5 +1,5 @@
 #calculator {
-    margin: 50px;
+    margin: 20px;
     width: 275px;
     box-shadow: 0 0 20px lightgrey;
     padding: 10px;
@@ -47,7 +47,7 @@ button:active{
     display: inline-block;
     visibility: hidden;
     vertical-align: top;
-    margin: 50px;
+    margin-top: 20px;
 }
 
 .table td{
