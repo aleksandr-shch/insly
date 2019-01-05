@@ -15,7 +15,7 @@
         </script>
     </head>
     <body>
-        <form id="calculator" action="app/calculator.php" method="post">
+        <form id="calculator" action="calculator.php" method="post">
             <p>CAR INSURANCE CALCULATOR</p>
             <p id="message">&nbsp;</p>
             <input type="hidden" name="time_zone" value="">
@@ -23,7 +23,7 @@
             <input id="input_calc1" type="number" min="100" max="100000" name="estimated" placeholder="Estimated value of the car (100-100000)" value="">
             <label for="input_calc2">Tax &percnt;:</label>
             <input id="input_calc2" type="number" min="0" max="100" name="tax" placeholder="Tax percentage (0-100)" value="">
-            <label for="input_calc3">Instalment months:</label>
+            <label for="input_calc3">Installment months:</label>
             <input id="input_calc3" type="number" min="1" max="12" name="installment" placeholder="Number of installments (1-12)" value="">
             <button onclick="return false;">Calculate</button>
         </form>

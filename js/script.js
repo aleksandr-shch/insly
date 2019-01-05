@@ -28,45 +28,26 @@ $(document).ready(function () {
                     if(response.success === true){
                         message.css('visibility', 'visible').css('color', 'green').text('Calculated');
                         table.css('visibility','visible');
-                        cellsAddText(table, 2, 'first-child', 'Base premium ('+response.message.base+'%)');
-                        cellsAddText(table, 4, 'first-child', 'Tax ('+response.message.num2+'%)');
-                        cellsAddText(table, 1, 'nth-child(2)', response.message.num1);
-                        cellsAddText(table, 2, 'nth-child(2)', response.message.baseTotal);
-                        cellsAddText(table, 3, 'nth-child(2)', response.message.commissionTotal);
-                        cellsAddText(table, 4, 'nth-child(2)', response.message.taxTotal);
-                        cellsAddText(table, 5, 'nth-child(2)', response.message.totalCost);
+                        cellsAddText(table, 2, 'first-child', 'Base premium ('+response.message.policyPercentage+'%)');
+                        cellsAddText(table, 4, 'first-child', 'Tax ('+response.message.taxPercentage+'%)');
+                        cellsAddText(table, 1, 'nth-child(2)', response.message.carCost);
+                        cellsAddText(table, 2, 'nth-child(2)', response.message.basePremium);
+                        cellsAddText(table, 3, 'nth-child(2)', response.message.commission);
+                        cellsAddText(table, 4, 'nth-child(2)', response.message.tax);
+                        cellsAddText(table, 5, 'nth-child(2)', response.message.total);
 
-                        if(parseInt(response.message.num3) > 1)
+                        if(parseInt(response.message.installmentsCount) > 1)
                         {
-                            let j = 1;
+                            let k = 1;
 
-                            for(let i = 1; i <= response.message.num3; i++){
-
-                                let base = '';
-                                let commission = '';
-                                let tax = '';
-                                let total_cost = '';
-
-                                if(i == 1){
-                                    base = response.message.baseCorrected;
-                                    commission = response.message.commissionCorrected;
-                                    tax = response.message.taxCorrected;
-                                    total_cost = response.message.totalCostCorrected;
-                                }
-                                else{
-                                    base = response.message.baseDivided;
-                                    commission = response.message.commissionDivided;
-                                    tax = response.message.taxDivided;
-                                    total_cost = response.message.totalCostDivided;
-                                }
-
-                                let k = i + 1;
+                            for(let i = 1; i <= response.message.installmentsCount; i++){
+                                k = i + 1;
                                 table.find("th:nth-child("+k+")").after('<th>'+i+' Installment</th>');
                                 cellsAddText(table, 1, 'nth-child('+k+')', '&nbsp;', 1);
-                                cellsAddText(table, 2, 'nth-child('+k+')', base, 1);
-                                cellsAddText(table, 3, 'nth-child('+k+')', commission, 1);
-                                cellsAddText(table, 4, 'nth-child('+k+')', tax, 1);
-                                cellsAddText(table, 5, 'nth-child('+k+')', total_cost, 1);
+                                cellsAddText(table, 2, 'nth-child('+k+')', response.message.installments[i-1].basePremium, 1);
+                                cellsAddText(table, 3, 'nth-child('+k+')', response.message.installments[i-1].commission, 1);
+                                cellsAddText(table, 4, 'nth-child('+k+')', response.message.installments[i-1].tax, 1);
+                                cellsAddText(table, 5, 'nth-child('+k+')', response.message.installments[i-1].total, 1);
                             }
                         }
                     }
