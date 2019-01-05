@@ -67,25 +67,9 @@ function errorResponse($message){
  * @return string
  */
 function getBase($time_zone){
-    $base = 11;
+    $time = time() + $time_zone*60;
 
-    if(date('L') == 'friday'){
-
-        if($time_zone > 0){
-            $shift = '30';
-        }
-        else{
-            $shift = '-30';
-        }
-
-        if(abs($time_zone) >= 60){
-            $shift = $time_zone;
-        }
-        $time = time() + $shift*60;
-        $date = date("H", $time);
-
-        if($date > 14 && $date < 21) $base = 13;
-    }
+    (date("l", $time) == 'Friday' && date("H", $time) > 14 && date("H", $time) < 21) ? $base = 13 : $base = 11;
 
     return $base;
 }
