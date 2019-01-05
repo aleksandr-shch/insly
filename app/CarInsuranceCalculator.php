@@ -99,9 +99,10 @@ class CarInsuranceCalculator extends PolicyCalculation
         return $result;
     }
 
+
     /**
      * @param int $installmentsCount
-     * @return self
+     * @return int
      */
     public function setInstallmentsCount(int $installmentsCount) : int
     {

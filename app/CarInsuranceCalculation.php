@@ -33,10 +33,10 @@ class CarInsuranceCalculation extends PolicyCalculation
      */
     public $installmentsCount;
 
+
     /**
-     * Calculate installments
-     *
-     * @param $installmentsCount
+     * @param int $installmentsCount
+     * @return array|PolicyCalculation[]
      */
     public function calculateInstallments(int $installmentsCount)
     {
