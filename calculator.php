@@ -62,9 +62,10 @@ function errorResponse($message){
     return response($message, false);
 }
 
+
 /**
  * @param $time_zone
- * @return string
+ * @return int
  */
 function getBase($time_zone){
     $time = time() + $time_zone*60;
