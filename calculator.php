@@ -61,14 +61,13 @@ function errorResponse($message)
     return response($message, false);
 }
 
-
 /**
  * @param $time_zone
  * @return int
  */
-function getBase(int $time_zone) : int
+function getBase($time_zone) : int
 {
-    $time = time() + $time_zone*60;
+    $time = time() + (int)$time_zone*60;
 
     (date("l", $time) == 'Friday' && date("H", $time) > 14 && date("H", $time) < 21) ? $base = 13 : $base = 11;
 
