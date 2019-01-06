@@ -38,7 +38,7 @@ class CarInsuranceCalculation extends PolicyCalculation
      * @param int $installmentsCount
      * @return array|PolicyCalculation[]
      */
-    public function calculateInstallments(int $installmentsCount)
+    public function calculateInstallments(int $installmentsCount) : array
     {
         $penultimateInstallmentIndex = $installmentsCount - 1;
         $baseInstallment = $this->getBaseInstallment($installmentsCount);

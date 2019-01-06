@@ -56,6 +56,7 @@ $(document).ready(function ()
                 },
                 error: function (request, status, error)
                 {
+                    let errors = JSON.stringify(request)+'---'+status+'---'+error;
                     message.css('visibility', 'visible').css('color', 'red').text('An error occurred, please try later');
                 }
             });
