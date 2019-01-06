@@ -26,16 +26,13 @@ class PolicyCalculation
      */
     public $total = 0;
 
-    /**
-     * @var array
-     */
 
     /**
-     * Calculate total
+     * @return float
      */
-    protected function calculatedTotalAttribute() : int
+    protected function calculatedTotalAttribute() : float
     {
-        return $this->basePremium + $this->commission + $this->tax;
+        return round($this->basePremium + $this->commission + $this->tax, CarInsuranceCalculation::BASE_PRECISION);
     }
 
     public function __get($name)
@@ -50,6 +47,6 @@ class PolicyCalculation
             return $this->{$name};
         }
 
-        throw  new InvalidArgumentException("Property {$name} does not exist");
+        throw new InvalidArgumentException("Property {$name} does not exist");
     }
 }

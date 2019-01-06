@@ -1,37 +1,34 @@
 <?php
 
-if(($_POST['estimated'] >= 100 && $_POST['estimated'] <= 100000)
-    && ($_POST['tax'] >= 0 && $_POST['tax'] <= 100)
-    && ($_POST['installment'] >= 1 && $_POST['installment'] <= 12)){
+require_once './app/DataValidator.php';
 
-    //POST
-    $num1 = $_POST['estimated'];
-    $num2 = $_POST['tax'];
-    $num3 = $_POST['installment'];
-    $time_zone = $_POST['time_zone'];
+try {
+    $validate = new DataValidator();
+}
+catch(EmptyDataException $e) {
+    echo errorResponse($e->getMessage());
+}
 
+if($validate->post){
     require_once './app/CarInsuranceCalculator.php';
 
     //Calculate
     $calc = new CarInsuranceCalculator();
 
-    $calc->setCarCost($num1);
-    $calc->setPolicyPercentage(getBase($time_zone));
+    $calc->setCarValue($validate->post['value']);
+    $calc->setPolicyPercentage(getBase($validate->post['user_time']));
     $calc->setCommissionPercentage(17);
-    $calc->setTaxPercentage($num2);
-    $calc->setInstallmentsCount($num3);
+    $calc->setTaxPercentage($validate->post['tax']);
+    $calc->setInstallmentsCount($validate->post['installments']);
 
     $result = $calc->calculate();
 
     if($result){
-        echo successResponse($result );
+        echo successResponse($result);
     }
     else{
         echo errorResponse("An error occurred, please try later");
     }
-}
-else{
-    echo errorResponse("Please, fill all fields correctly");
 }
 
 /**
@@ -41,7 +38,7 @@ else{
  */
 function response($message, $success = true)
 {
-    header('Content-type: application/json');
+    header('Content-Type: application/json');
 
     return json_encode(array('success' => $success, 'message' => $message));
 }
@@ -50,7 +47,8 @@ function response($message, $success = true)
  * @param $message
  * @return false|string
  */
-function successResponse($message){
+function successResponse($message)
+{
     return response($message, true);
 }
 
@@ -58,7 +56,8 @@ function successResponse($message){
  * @param $message
  * @return false|string
  */
-function errorResponse($message){
+function errorResponse($message)
+{
     return response($message, false);
 }
 
@@ -67,7 +66,8 @@ function errorResponse($message){
  * @param $time_zone
  * @return int
  */
-function getBase($time_zone){
+function getBase(int $time_zone) : int
+{
     $time = time() + $time_zone*60;
 
     (date("l", $time) == 'Friday' && date("H", $time) > 14 && date("H", $time) < 21) ? $base = 13 : $base = 11;

@@ -6,9 +6,9 @@ require_once __DIR__ . '/PolicyCalculation.php';
 class CarInsuranceCalculator extends PolicyCalculation
 {
     /**
-     * @var float Car cost
+     * @var float Car value
      */
-    protected $carCost;
+    protected $carValue;
 
     /**
      * @var float Tax percentage
@@ -22,7 +22,7 @@ class CarInsuranceCalculator extends PolicyCalculation
 
 
     /**
-     * @var integer Policy percentage of car cost
+     * @var integer Policy percentage of car value
      */
     protected $policyPercentage;
 
@@ -38,12 +38,12 @@ class CarInsuranceCalculator extends PolicyCalculation
 
 
     /**
-     * @param float $carCost
+     * @param float $carValue
      * @return self
      */
-    public function setCarCost(float $carCost)
+    public function setCarValue(float $carValue)
     {
-        $this->carCost = $carCost;
+        $this->carValue = $carValue;
         return $this;
     }
 
@@ -61,7 +61,7 @@ class CarInsuranceCalculator extends PolicyCalculation
      * @param int $policyPercentage
      * @return self
      */
-    public function setPolicyPercentage(int $policyPercentage)
+    public function setPolicyPercentage(float $policyPercentage)
     {
         $this->policyPercentage = $policyPercentage;
         return $this;
@@ -71,7 +71,7 @@ class CarInsuranceCalculator extends PolicyCalculation
      * @param mixed $commissionPercentage
      * @return self
      */
-    public function setCommissionPercentage(int $commissionPercentage)
+    public function setCommissionPercentage(float $commissionPercentage)
     {
         $this->commissionPercentage = $commissionPercentage;
         return $this;
@@ -84,8 +84,8 @@ class CarInsuranceCalculator extends PolicyCalculation
     {
         $result = new CarInsuranceCalculation($this->installmentsCount);
 
-        $result->carCost = $this->carCost;
-        $result->basePremium = round($this->carCost / 100 * $this->policyPercentage, CarInsuranceCalculation::BASE_PRECISION);
+        $result->carValue = $this->carValue;
+        $result->basePremium = round($this->carValue / 100 * $this->policyPercentage, CarInsuranceCalculation::BASE_PRECISION);
         $result->commission = round($result->basePremium / 100 * $this->commissionPercentage,CarInsuranceCalculation::BASE_PRECISION);
         $result->tax = round($result->basePremium / 100 * $this->taxPercentage,CarInsuranceCalculation::BASE_PRECISION);
         $result->policyPercentage = $this->policyPercentage;

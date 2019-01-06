@@ -8,22 +8,21 @@
 
 #message
 {
-    visibility: hidden;
     min-height: 30px;
 }
 
-label{
+#calculator label{
     display: block;
 }
 
-input{
+#calculator input{
     padding-left: 10px;
     width: 260px;
     height: 30px;
     margin-bottom: 15px;
 }
 
-button{
+#calculator button{
     width: 275px;
     height: 30px;
     color: white;
@@ -34,11 +33,11 @@ button{
     margin-top: 15px;
 }
 
-button:hover{
+#calculator button:hover{
     background-color: orange;
 }
 
-button:active{
+#calculator button:active{
     background-color: white;
     color: darkorange;
 }

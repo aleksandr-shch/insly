@@ -9,9 +9,9 @@ class CarInsuranceCalculation extends PolicyCalculation
     const BASE_PRECISION = 2;
 
     /**
-     * @var float Car cost
+     * @var float Car value
      */
-    public $carCost;
+    public $carValue;
 
     /**
      * @var PolicyCalculation[]
@@ -24,7 +24,7 @@ class CarInsuranceCalculation extends PolicyCalculation
     public $taxPercentage;
 
     /**
-     * @var integer Policy percentage of car cost
+     * @var integer Policy percentage of car value
      */
     public $policyPercentage;
 

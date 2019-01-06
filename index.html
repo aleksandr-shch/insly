@@ -5,6 +5,7 @@
         <title>Calculator</title>
         <link rel="stylesheet" href="css/style.css">
         <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
         <script type="text/javascript" src="js/script.js"></script>
         <script type="text/javascript">
             $(document).ready(function(){
@@ -17,14 +18,14 @@
     <body>
         <form id="calculator" action="calculator.php" method="post">
             <p>CAR INSURANCE CALCULATOR</p>
-            <p id="message">&nbsp;</p>
-            <input type="hidden" name="time_zone" value="">
-            <label for="input_calc1">Estimated &euro;:</label>
-            <input id="input_calc1" type="number" min="100" max="100000" name="estimated" placeholder="Estimated value of the car (100-100000)" value="">
-            <label for="input_calc2">Tax &percnt;:</label>
-            <input id="input_calc2" type="number" min="0" max="100" name="tax" placeholder="Tax percentage (0-100)" value="">
-            <label for="input_calc3">Installment months:</label>
-            <input id="input_calc3" type="number" min="1" max="12" name="installment" placeholder="Number of installments (1-12)" value="">
+            <p id="message"><sub>* - required</sub></p>
+            <input type="hidden" name="user_time" value="">
+            <label for="input_calc1">Value &euro;: <sup>*</sup></label>
+            <input id="input_calc1" type="number" min="100" max="100000" name="value" placeholder="Estimated value of the car (100-100000)" value="" required="required">
+            <label for="input_calc2">Tax &percnt;: <sup>*</sup></label>
+            <input id="input_calc2" type="number" min="0" max="100" name="tax" placeholder="Tax percentage (0-100)" value="" required="required">
+            <label for="input_calc3">Installment months: <sup>*</sup></label>
+            <input id="input_calc3" type="number" min="1" max="12" name="installments" placeholder="Number of installments (1-12)" value="" required="required">
             <button onclick="return false;">Calculate</button>
         </form>
 
