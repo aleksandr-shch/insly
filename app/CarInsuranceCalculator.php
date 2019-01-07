@@ -41,7 +41,7 @@ class CarInsuranceCalculator extends PolicyCalculation
      * @param float $carValue
      * @return $this
      */
-    public function setCarValue(float $carValue)
+    public function setCarValue(float $carValue) : self
     {
         $this->carValue = $carValue;
 
@@ -52,7 +52,7 @@ class CarInsuranceCalculator extends PolicyCalculation
      * @param float $taxPercentage
      * @return $this
      */
-    public function setTaxPercentage(float $taxPercentage)
+    public function setTaxPercentage(float $taxPercentage) : self
     {
         $this->taxPercentage = $taxPercentage;
 
@@ -63,7 +63,7 @@ class CarInsuranceCalculator extends PolicyCalculation
      * @param int $policyPercentage
      * @return self
      */
-    public function setPolicyPercentage(int $policyPercentage)
+    public function setPolicyPercentage(int $policyPercentage) : self
     {
         $this->policyPercentage = $policyPercentage;
 
@@ -75,7 +75,7 @@ class CarInsuranceCalculator extends PolicyCalculation
      * @param int $commissionPercentage
      * @return $this
      */
-    public function setCommissionPercentage(int $commissionPercentage)
+    public function setCommissionPercentage(int $commissionPercentage) : self
     {
         $this->commissionPercentage = $commissionPercentage;
 

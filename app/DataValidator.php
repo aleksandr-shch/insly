@@ -55,7 +55,7 @@ class DataValidator
     /**
      * @return object
      */
-    public function validateData() :object
+    public function validateData() : object
     {
         try
         {
